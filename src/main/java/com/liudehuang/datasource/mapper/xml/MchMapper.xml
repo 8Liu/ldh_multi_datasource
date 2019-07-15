@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liudehuang.datasource.mapper.MchMapper">
+    <resultMap id="mchMap" type="com.liudehuang.datasource.entity.MchEntity">
+        <result property="id" column="id" />
+        <result property="mchId" column="mch_id"/>
+        <result property="mchName" column="mch_name"/>
+        <result property="dataSource" column="datasource"/>
+    </resultMap>
+
+    <sql id="mch_table">
+        merchant
+    </sql>
+
+    <insert id="saveMch" parameterType="com.liudehuang.datasource.entity.MchEntity">
+        insert into <include refid="mch_table"/>(
+            id,
+            mch_id,
+            mch_name,
+            datasource
+        )values (
+            #{id},
+            #{mchId},
+            #{mchName},
+            #{dataSource}
+        )
+    </insert>
+
+    <select id="queryMch" parameterType="Integer" resultMap="mchMap">
+        select
+            id,
+            mch_id,
+            mch_name,
+            datasource
+        from <include refid="mch_table"/>
+        where id = #{id}
+    </select>
+
+    <select id="queryMchByMchId" parameterType="long" resultMap="mchMap">
+        select
+        id,
+        mch_id,
+        mch_name,
+        datasource
+        from <include refid="mch_table"/>
+        where mch_id = #{mchId}
+    </select>
+</mapper>

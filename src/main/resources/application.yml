@@ -1,0 +1,85 @@
+spring:
+  # 数据库配置
+  datasource:
+    name:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/member?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+    username: root
+    password: 123456
+    driverClassName: com.mysql.jdbc.Driver
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 'x' FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 检测连接池泄露
+    removeAbandoned: true
+    removeAbandonedimeout: 1800
+    logAbandoned: true
+    # encrypt password
+    ##,log4j
+    filters: config,stat,wall
+    poolPreparedStatements: false
+    maxOpenPreparedStatements: 20
+    useGlobalDataSourceStat: true
+# 主数据源名称
+  mainDatabase: "master_1"
+  #多数据源的数据源名称与独自的配置信息
+  dynamicDatabase:
+    master_1:
+      url: jdbc:mysql://192.168.8.128:3306/member?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+      username: "root"
+      password: "123456"
+    slave_1:
+      url: jdbc:mysql://192.168.8.129:3306/member?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+      username: "admin"
+      password: "123456"
+    slave_2:
+      url: jdbc:mysql://192.168.8.129:3307/member?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+      username: "admin"
+      password: "123456"
+
+
+
+
+# druid monitor 配置
+druid:
+  wiki:
+    # WebStatFilter配置，说明请参考Druid Wiki，配置_配置WebStatFilter
+    webStatFilter:
+      enabled: true #是否启用StatFilter默认值true
+      urlPattern: "/*"
+      exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid2/*"
+      sessionStatEnable:
+      sessionStatMaxCount:
+      principalSessionName:
+      principalCookieName:
+      profileEnable:
+    # StatViewServlet配置，说明请参考Druid Wiki，配置_StatViewServlet配置
+    statViewServlet:
+      enabled: true #是否启用StatViewServlet默认值true
+      urlPattern: "/druid/*"
+      resetEnable: false
+      loginUsername: root
+      loginPassword: 123456
+      allow: ""
+      deny: ""
+
+mybatis:
+  configLocation: "classpath:mybatis-config.xml"
+  #checkConfig-location : false
+  mapperLocations: "classpath:com/liudehuang/datasource/mapper/xml/*Mapper.xml"
+
+  typeAliasesPackage: "com.liudehuang.datasource.mapper "
+
+
+logging:
+  level:
+    com.liudehuang.datasource: debug
+    org.springframework.data: debug
+    org.apache.ibatis: debug
